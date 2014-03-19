@@ -1,0 +1,237 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300);
+
+html,
+body{
+	height: 100%;
+}
+
+body{
+  background-color: #FBF5DF;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	line-height: 1.6em;
+  margin: 0;
+}
+
+
+*{
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+}
+p{
+  margin: 0 0 15px;
+}
+
+ul,ol{
+	list-style: none;
+}
+
+.img img{
+  max-width: 100%;
+}
+
+.title{
+  color: #D5422E;
+  font-size: 20px;
+}
+
+.title small{
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.movie-list,
+.list-cast{
+  padding: 0;
+}
+
+.movie-list:after,
+.list-cast:after,
+.modal-box__body:after,
+.wrapper:after{
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.movie-list > li{
+  float: left;
+	margin: 0 10px 15px 0;
+  -webkit-transition: all .25s ;
+     -moz-transition: all .25s ;
+      -ms-transition: all .25s ;
+       -o-transition: all .25s ;
+          transition: all .25s ;
+}
+
+.list-cast > li {
+  float: left;
+  margin: 10px 5px 10px;
+  width: 210px;
+  min-height: 100px;
+}
+
+.list-cast .img{
+  max-width: 50px;
+}
+
+.list-wrap{
+  height: 200px;
+  overflow: auto;
+  margin-bottom: 15px;
+}
+
+.movie-list > li:hover{
+  -webkit-transform: scale(1.2);
+     -moz-transform: scale(1.2);
+      -ms-transform: scale(1.2);
+       -o-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.movie-list .img{
+  border-radius: 5px;
+  box-shadow: 2px -2px 4px #D5422E;
+  height: 210px;
+  overflow: hidden;
+  width: 150px;
+}
+
+.main-header{
+  background-color: #FFF;
+  border-bottom: 3px solid #D5422E;
+}
+
+.logo{
+  float: left;
+}
+
+.main-nav{
+  float: right;
+}
+
+.main-nav ul{
+  padding: 0;
+}
+
+.main-nav li{
+  display: inline-block;
+}
+
+.main-nav a{
+  color: #D5422E;
+  font-weight: 300;
+  padding: 5px 10px 6px 10px;
+}
+
+.main-nav a:hover,
+.main-nav a.active{
+  color: #D5422E;
+  font-weight: 600;
+}
+
+.section-movie .title{
+  border-bottom: 1px solid #CCC;
+  padding: 6px 0;
+}
+
+.modal-box{
+  position: relative;
+  background-color: white;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.modal-box p{
+  font-size: 12px;
+}
+
+.modal-box__img{
+  width: 25%;
+  float: left;
+}
+
+.modal-box__body{
+  overflow: hidden;
+  padding: 5px 30px 10px 10px;
+}
+
+.truncate{
+	padding-right: 20px;
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  max-height: 154px; /* Fallback for non-webkit */
+  margin: 0 auto;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media{
+  display:block;
+}
+
+.media:after, .media:before{
+  content: '';
+  display: block;
+}
+
+.media:after{
+  clear: both;
+}
+
+.media__img{
+  float:left;
+  margin-right: 1rem;
+}
+
+.media__img--margin-left{
+  @extend .media__img;
+  margin-right: rem-calc(50);
+}
+
+.media__img--rev{
+  float:right;
+  margin-left: 1rem;
+}
+
+.media__img img,
+.media__img--rev img{
+  display:block;
+}
+
+.media__body{
+  overflow:hidden;
+}
+.media__body,
+.media__body > :last-child{
+  margin-bottom:0;
+}
+
+.wrapper{
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+
+.modal-box .button{
+  float: right;
+}
+
+.button{
+  background-color: #D5422E;
+  border-bottom: 2px solid #612219;
+  color: white;
+  padding: 5px 10px 6px 10px;
+}
+
+.button.button--remove{
+  background-color: #BBB;
+  border-bottom: 2px solid #666;
+}
