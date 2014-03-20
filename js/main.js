@@ -26,7 +26,7 @@
     return _.template( $("#"+id).html() );
   };
 
-  var initUrl = function( type, info ){
+  App.initUrl = function( type, info ){
     return App.Setting.baseUrl + '/'+type+'/'+info+'?api_key=' + App.Setting.apiKey;
   }
 
@@ -50,7 +50,7 @@
   };
 
   App.loadFavoriteMovie = function(){
-    renderCollection( App.getLocalStorage() ,'favorite')
+    App.renderCollection( App.getLocalStorage() ,'favorite')
   };
 
   App.findLocalStorage = function( id ){
@@ -67,43 +67,43 @@
 
   //RENDERS
 
-  var renderCollection = function( collection, name ){
+  App.renderCollection = function( collection, container ){
     var $list = $('<ul>');
     _.each(collection, function(item){
-      render( item, $list );
+      App.render( item, $list );
     });
-    renderView($list, name);
+    App.renderView($list, container);
   };
 
-  var render = function( item, container ){ 
+  App.render = function( item, container ){ 
     var templates = template( 'templateMovie' );
     container.append( templates( item ) );
   }
 
-  var renderView = function( item, nameContainer ){
-    $( '#'+nameContainer ).html( item.html() );
+  App.renderView = function( item, container ){
+    $( '#'+container ).html( item.html() );
   }
 
-  App.saveMovies = function( data, name, collection ){
+  App.saveMovies = function( data, container, collection ){
     _.each(data, function(item){
       var movie = new MovieModel(item.id, item.poster_path, item.title );
       collection.movies.push(movie);
     });
-    renderCollection(collection.movies, name)
+    App.renderCollection(collection.movies, container)
   };
 
-  //Getter
+  //Getters
 
-  App.getMovies = function( url, nameCollection, collection ){
+  App.getMovies = function( url, container, collection ){
     $.ajax({
       url: url,
       success: function(data){
-        App.saveMovies( data.results, nameCollection, collection );
+        App.saveMovies( data.results, container, collection );
       }
     });
   };
 
-  var getMovie = function( url , fallback){
+  App.getMovie = function( url , fallback){
     $.ajax({
       url: url,
       success: function(data){
@@ -112,8 +112,8 @@
     });
   };
 
-  var getCast = function(id, fallback){
-    var url = initUrl('movie', id+'/credits');
+  App.getCast = function(id, fallback){
+    var url = App.initUrl('movie', id+'/credits');
     $.ajax({
       url: url,
       success: function(data){
@@ -123,7 +123,7 @@
   }
 
   App.getMovieDetail = function(id){
-    var url = initUrl('movie', id);
+    var url = App.initUrl('movie', id);
     var modalMovie;
     $.ajax({
       url: url,
@@ -138,7 +138,7 @@
           year: data.release_date,
           status: estado
         };
-        getCast(id, function(data) {
+        App.getCast(id, function(data) {
           _.each(data.cast, function(cast){
             var casting = {
               name: cast.name,
@@ -148,7 +148,7 @@
             modalMovie.casts.push(casting);
           });
           var tmp = template("templateModal")(modalMovie);
-          openModal( tmp );
+          App.openModal( tmp );
         });
       }
     });
@@ -157,12 +157,12 @@
   App.addFavorite = function( item ){
 
     var id = $(item).attr('href'),
-    url = initUrl('movie', id);
+    url = App.initUrl('movie', id);
 
     App.Collections.favoriteMovie = App.getLocalStorage();
 
     if( App.findLocalStorage( id ) ){
-      getMovie( url , function(data){
+      App.getMovie( url , function(data){
         var movie = new MovieModel(data.id, data.poster_path, data.title );
         App.Collections.favoriteMovie.push( movie );
         App.saveLocalStorage(App.Collections.favoriteMovie);
@@ -181,13 +181,13 @@
          App.Collections.favoriteMovie.splice(i, 1);
          App.saveLocalStorage(App.Collections.favoriteMovie);
          App.loadFavoriteMovie();
-         closeModal();
+         App.closeModal();
          break;
       }
     }
   }
 
-  var favoriteEvent = function(){
+  App.favoriteEvent = function(){
     $('.js-add-favorite').on('click',function(e){
       e.preventDefault();
       App.addFavorite( this );
@@ -199,21 +199,21 @@
     });
   }
 
-  var openModal = function( tmp ){ 
+  App.openModal = function( tmp ){ 
     $.magnificPopup.open({
       items:{
         src: tmp
       }, 
       type:'inline'
     });
-    favoriteEvent();
+    App.favoriteEvent();
   }
 
-  var closeModal = function(){ 
+  App.closeModal = function(){ 
     $.magnificPopup.close();
   }
 
-  var initModalbox = function(){
+  App.initModalbox = function(){
     $('.movie-list').on('click','.js-modal', function(e){
       e.preventDefault();
       App.getMovieDetail( $(this).attr('href') );
@@ -224,14 +224,14 @@
   App.Collections.MoviesPopular = new MovieCollections();
   App.Collections.MoviesTopRated = new MovieCollections();
 
-  var moviesPopularUrl = initUrl( 'movie', 'popular'),
-  moviesTopRatedUrl = initUrl( 'movie', 'top_rated');
+  var moviesPopularUrl = App.initUrl( 'movie', 'popular'),
+  moviesTopRatedUrl = App.initUrl( 'movie', 'top_rated');
 
   App.initLocalStorage();
   App.loadFavoriteMovie();
-  initModalbox();
+  App.initModalbox();
 
-  App.getMovies(  moviesPopularUrl, 'popular', App.Collections.MoviesPopular);
+  App.getMovies(  moviesPopularUrl, 'popular', App.Collections.MoviesPopular );
   App.getMovies(  moviesTopRatedUrl, 'top_rated', App.Collections.MoviesTopRated );
 
 
